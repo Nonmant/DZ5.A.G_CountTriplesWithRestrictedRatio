@@ -33,6 +33,15 @@ TEST_CASE("test 1, file", "[simple]"){
     );
 }
 
+TEST_CASE("tesm 030", ""){
+    std::ifstream input( "../030", std::ofstream::in);
+    std::stringstream output;
+    parseFile(input,output);
+    REQUIRE(output.str() ==
+            "960385302450000"
+    );
+}
+
 TEST_CASE("mine", ""){
     std::stringstream input(
             "7 2\n"
