@@ -15,23 +15,27 @@ void parseFile(std::istream & input, std::ostream & output){
         input >> number;
         ++numbers[number];
     }
+    auto numsSize = numbers.size();
+    std::vector<std::pair<int,int>> numVect(numsSize);
+    std::copy_n(numbers.begin(), numsSize, numVect.begin());
 
     unsigned long long count = 0, duplicates = 0;
-    auto right = numbers.begin();
-    for(auto left = numbers.begin(); left!=numbers.end(); ++left){
-        while (right!=numbers.end() && left->first*k>=right->first){
+    auto right = numVect.begin();
+    for(auto left = numVect.begin(); left!=numVect.end(); ++left){
+        unsigned long long rightMax = left->first*k;
+        while (right!=numVect.end() && rightMax>=right->first){
             if(right->second>1)
                 ++duplicates;
             ++right;
         }
-        auto rangeLen = std::distance(left,right);
+        int rangeLen = std::distance(left,right);
         if(left->second>=3)// 1,1,1
             ++count;
-        if(left->second>=2)// 1,1,* | 1,*,1 | *,1,1
+        if(left->second>=2){// 1,1,* | 1,*,1 | *,1,1
             count+=3*(rangeLen-1);
-
-        if(left->second>1)
             --duplicates;
+        }
+
         count+=duplicates*3;//each duplicate > left generates 3 variants
 
         //Variants with unique numbers
