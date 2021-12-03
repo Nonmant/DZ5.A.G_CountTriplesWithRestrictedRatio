@@ -28,7 +28,7 @@ void parseFile(std::istream & input, std::ostream & output){
                 ++duplicates;
             ++right;
         }
-        int rangeLen = std::distance(left,right);
+        auto rangeLen = std::distance(left,right);
         if(left->second>=3)// 1,1,1
             ++count;
         if(left->second>=2){// 1,1,* | 1,*,1 | *,1,1
